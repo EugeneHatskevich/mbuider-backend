@@ -25,6 +25,20 @@ export class UserService {
         getUserDto.firstName = newUser.firstName;
         getUserDto.lastName = newUser.lastName;
         getUserDto.isActive = newUser.isActive;
+        getUserDto.recipes = newUser.recipes;
+
+        return getUserDto;
+    }
+
+    public async getById(id: string): Promise<GetUserDto> {
+        const user: User = await this.userRepository.findOne({where: {id: +id}, relations: { recipes: true }});
+
+        const getUserDto: GetUserDto = new GetUserDto();
+        getUserDto.id = user.id;
+        getUserDto.firstName = user.firstName;
+        getUserDto.lastName = user.lastName;
+        getUserDto.isActive = user.isActive;
+        getUserDto.recipes = user.recipes;
 
         return getUserDto;
     }
