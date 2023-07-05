@@ -1,5 +1,5 @@
-image:
-  node: 16.15.0
+image: node: 16.15.0
+
 pipelines:
   branches:
     master:
@@ -24,7 +24,7 @@ pipelines:
           caches:
             - node
           script:
-            - pipe: atlassian/heroku-deploy:1.1.4
+            - pipe: atlassian/heroku-deploy:2.1.0
               variables:
                 HEROKU_API_KEY: $HEROKU_API_KEY
                 HEROKU_APP_NAME: $HEROKU_APP_NAME
