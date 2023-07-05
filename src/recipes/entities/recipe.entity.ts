@@ -9,6 +9,9 @@ export class Recipe {
     @Column()
     name: string;
 
+    @Column({nullable: true})
+    description?: string;
+
     @Column({type: 'int8'})
     proteins: number;
 

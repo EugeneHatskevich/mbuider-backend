@@ -5,7 +5,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../users/entities/user.entity";
 import { Repository } from "typeorm";
 import { Recipe } from "./entities/recipe.entity";
-import { GetRecipeDto } from "./dto/get-recipe.dto";
 import { UserService } from "../users/services/user.service";
 
 @Injectable()
@@ -17,7 +16,7 @@ export class RecipesService {
     ) {
     }
 
-    public async create(createRecipeDto: CreateRecipeDto): Promise<GetRecipeDto> {
+    public async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
         const user: User = await this.userService.getById(createRecipeDto.userId);
 
         const recipe: Recipe = new Recipe();
@@ -27,21 +26,11 @@ export class RecipesService {
         recipe.carbohydrates = createRecipeDto.carbohydrates;
         recipe.user = user;
 
-        const newRecipe: Recipe = await this.recipeRepository.save(recipe);
-
-        const getRecipeDto: GetRecipeDto = new GetRecipeDto();
-        getRecipeDto.id = newRecipe.id;
-        getRecipeDto.name = newRecipe.name;
-        getRecipeDto.proteins = newRecipe.proteins;
-        getRecipeDto.fats = newRecipe.fats;
-        getRecipeDto.carbohydrates = newRecipe.carbohydrates;
-        getRecipeDto.user = newRecipe.user;
-
-        return getRecipeDto;
+        return  this.recipeRepository.save(recipe);
     }
 
-    findAll() {
-        return `This action returns all recipes`;
+    public async findAll(): Promise<Recipe[]> {
+        return this.recipeRepository.find();
     }
 
     findOne(id: number) {
