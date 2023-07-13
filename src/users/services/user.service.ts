@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "../entities/user.entity";
-import { Repository } from "typeorm";
-import { CreateUserDto } from "../dtos/create-user.dto";
-import { GetUserDto } from "../dtos/get-user.dto";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../entities/user.entity';
+import { Repository } from 'typeorm';
+import { CreateUserDto } from '../dtos/create-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -13,33 +13,17 @@ export class UserService {
     ) {
     }
 
-    public async create(userDto: CreateUserDto): Promise<GetUserDto> {
-        const user: User = new User();
-        user.firstName = userDto.firstName;
-        user.lastName = userDto.lastName;
+    public async create(dto: CreateUserDto): Promise<User> {
+        dto.password = await this.hashPassword(dto.password);
 
-        const newUser: User = await this.userRepository.save(user);
-
-        const getUserDto: GetUserDto = new GetUserDto();
-        getUserDto.id = newUser.id;
-        getUserDto.firstName = newUser.firstName;
-        getUserDto.lastName = newUser.lastName;
-        getUserDto.isActive = newUser.isActive;
-        getUserDto.recipes = newUser.recipes;
-
-        return getUserDto;
+        return this.userRepository.save(dto);
     }
 
-    public async getById(id: string): Promise<GetUserDto> {
-        const user: User = await this.userRepository.findOne({where: {id: +id}, relations: { recipes: true }});
+    public async getByEmail(email: string): Promise<User | null> {
+        return this.userRepository.findOne({ where: { email: email } });
+    }
 
-        const getUserDto: GetUserDto = new GetUserDto();
-        getUserDto.id = user.id;
-        getUserDto.firstName = user.firstName;
-        getUserDto.lastName = user.lastName;
-        getUserDto.isActive = user.isActive;
-        getUserDto.recipes = user.recipes;
-
-        return getUserDto;
+    private async hashPassword(password: string): Promise<string> {
+        return bcrypt.hash(password, await bcrypt.genSalt(10));
     }
 }

@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "../../users/entities/user.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Recipe {
@@ -9,16 +9,16 @@ export class Recipe {
     @Column()
     name: string;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     description?: string;
 
-    @Column({type: 'int8'})
+    @Column({ type: 'int8' })
     proteins: number;
 
-    @Column({type: 'int8'})
+    @Column({ type: 'int8' })
     fats: number;
 
-    @Column({type: 'int8'})
+    @Column({ type: 'int8' })
     carbohydrates: number;
 
     @ManyToOne(() => User, (user) => user.recipes)
