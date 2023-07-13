@@ -25,6 +25,7 @@ import { JwtAuthStrategy } from './strategy/jwt-auth-strategy';
             entities: [],
             synchronize: true,
             autoLoadEntities: true,
+            ssl: true,
         }),
         UserModule,
         RecipesModule,
