@@ -1,6 +1,8 @@
 import { IsDefined, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Category } from '../../category/entities/category.entity';
+import { CreateCategoryDto } from '../../category/dto/create-category.dto';
 
-export class CreateRecipeDto {
+export class CreateProductDto {
     @IsString()
     @IsNotEmpty()
     @IsDefined()
@@ -17,4 +19,11 @@ export class CreateRecipeDto {
     @IsNotEmpty()
     @IsDefined()
     carbohydrates: number;
+    @IsNumber()
+    @IsNotEmpty()
+    @IsDefined()
+    calories: number;
+    @IsNotEmpty()
+    @IsDefined()
+    category: CreateCategoryDto;
 }

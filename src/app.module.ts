@@ -9,6 +9,8 @@ import * as process from 'process';
 import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
 import { JwtAuthStrategy } from './strategy/jwt-auth-strategy';
+import { ProductsModule } from './products/products.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
     imports: [
@@ -25,12 +27,14 @@ import { JwtAuthStrategy } from './strategy/jwt-auth-strategy';
             entities: [],
             synchronize: true,
             autoLoadEntities: true,
-            ssl: true,
+            ssl: false,
         }),
         UserModule,
         RecipesModule,
+        ProductsModule,
         AuthModule,
         TokenModule,
+        CategoryModule,
     ],
     controllers: [AppController],
     providers: [AppService, JwtAuthStrategy],

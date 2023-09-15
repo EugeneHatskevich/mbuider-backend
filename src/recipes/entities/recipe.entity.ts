@@ -4,7 +4,7 @@ import { User } from '../../users/entities/user.entity';
 @Entity()
 export class Recipe {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @Column()
     name: string;

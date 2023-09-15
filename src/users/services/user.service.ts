@@ -23,6 +23,10 @@ export class UserService {
         return this.userRepository.findOne({ where: { email: email } });
     }
 
+    public async getById(id: number): Promise<User> {
+        return this.userRepository.findOne({where: {id: id}});
+    }
+
     private async hashPassword(password: string): Promise<string> {
         return bcrypt.hash(password, await bcrypt.genSalt(10));
     }

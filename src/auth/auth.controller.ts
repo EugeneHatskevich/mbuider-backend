@@ -16,7 +16,6 @@ export class AuthController {
         return this.authService.register(dto);
     }
 
-    @UseGuards(JwtAuthGuard)
     @Post('/login')
     public async login(@Body() dto: GetUserDto): Promise<UserResponse> {
         return this.authService.login(dto);
